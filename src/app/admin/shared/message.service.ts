@@ -93,7 +93,7 @@ export class MessageService {
 		 	return Observable.of(this.recvMessages);
 		}
 
-		return this._http.post(CONFIG.API_BASE + '/message/get-messages', {}, this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/message', this._gs.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -123,7 +123,9 @@ export class MessageService {
 				return response.json().data;
 			})
 			.do(result => {
-				this.sentMessages.unshift(result);
+				if (this.sentMessages != undefined) {
+					this.sentMessages.unshift(result);
+				}
 			});
 	}
 

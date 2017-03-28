@@ -12,7 +12,13 @@ import { Message, MessageService } from '../../shared/message.service';
 export class SentComponent implements OnInit {
 	swal: any;
 
-	constructor(private _msgService: MessageService, private _gs: AppGlobalService) { }
+	checkedMessages: number[];
+	selectedAll: boolean;
+
+	constructor(private _msgService: MessageService, private _gs: AppGlobalService) { 
+		this.checkedMessages = [];
+		this.selectedAll = false;
+	}
 
 	ngOnInit() {
 
@@ -29,6 +35,42 @@ export class SentComponent implements OnInit {
 			},
 			(error) => console.log(error)
 		);
+	}
+
+	isChecked(id: number) {
+		if ( this.checkedMessages.indexOf(id) >= 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	
+	}
+
+	updateChecked(id: number, event) {
+		var index = this.checkedMessages.indexOf(id);
+
+		if (index >= 0) {
+			this.checkedMessages.splice(index, 1);
+		} else {
+			this.checkedMessages.push(id);
+		}
+	}
+
+	selectAll() {
+		this.checkedMessages = [];
+		if (this.selectedAll) {
+			this.selectedAll = false;
+		} else {
+			this.selectedAll = true;
+			var m;
+			for (m in this._msgService.sentMessages) {
+				this.checkedMessages.push(this._msgService.sentMessages[m].id);
+			}
+		}
+	}
+
+	deleteSelected() {
+		this.deleteMessages(this.checkedMessages);
 	}
 
 	deleteMessages(msgIds: number[]) {

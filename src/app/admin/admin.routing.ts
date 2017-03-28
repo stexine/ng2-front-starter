@@ -13,6 +13,7 @@ const routes: Routes = [
         children: [
             { path: 'account', loadChildren: './account/account.module#AccountModule' },
             { path: 'message', loadChildren: './message/message.module#MessageModule' },
+            { path: 'chat', loadChildren: './chat/chat.module#ChatModule' },
         ]
     }
 ];

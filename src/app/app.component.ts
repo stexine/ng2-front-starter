@@ -5,15 +5,19 @@ import { Response } from '@angular/http';
 import { AppGlobalService } from './app-global.service';
 import { AuthService } from './auth.service';
 
-import { Message,MessageService } from './admin/shared/message.service';
+import { Message, MessageService } from './admin/shared/message.service';
+
+declare var Pusher: any;
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
 	private _socketConn: any;
+	private _pusher: any;
+
 
 	constructor(private _gs: AppGlobalService, private _auth: AuthService, private _msgService: MessageService) {
 	}

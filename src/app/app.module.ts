@@ -1,3 +1,4 @@
+import { ChatModule } from './admin/chat/chat.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,8 @@ import { NotFound404Component } from './not-found-404/not-found-404.component';
 import AppGlobalErrorHandler from './app-global-error-handler';
 import { PersonService } from './test/person.service';
 import { AppGlobalService } from './app-global.service';
+import { ChatService } from './shared/chat.service';
+import { NotificationListenerComponent } from './notification-listener/notification-listener.component';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { AppGlobalService } from './app-global.service';
 		AppComponent,
 		WelcomeComponent,
 		TestComponent,
-		NotFound404Component
+		NotFound404Component,
+		NotificationListenerComponent
 	],
 	imports: [
 		BrowserModule,
@@ -37,6 +41,6 @@ import { AppGlobalService } from './app-global.service';
 		AppRoutingModule,
 	],
 	bootstrap: [AppComponent],
-	providers: [AppGlobalService, PersonService, {provide: ErrorHandler, useClass: AppGlobalErrorHandler}]
+	providers: [AppGlobalService, PersonService, ChatService, {provide: ErrorHandler, useClass: AppGlobalErrorHandler}]
 })
 export class AppModule { }

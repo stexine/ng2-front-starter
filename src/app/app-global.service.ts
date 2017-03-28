@@ -13,7 +13,10 @@ export class AppGlobalService {
 
 	isAuth: boolean;
 	authUser: User;
+	numNewChat: number;
 	numNewMessage: number;
+	pusherSocketId: string;
+	pusherAuthCode: string;
 
 	httpHeader: any;
 
@@ -32,6 +35,7 @@ export class AppGlobalService {
 		this.httpHeader = { headers: new Headers({ 'X-Requested-With': 'XMLHttpRequest', 'Authorization': 'Bearer ' +  localStorage.getItem('token')}) };
 
 		this.numNewMessage = 0;
+		this.numNewChat = 0;
 	}
 
 	clearAuth() {
@@ -59,6 +63,17 @@ export class AppGlobalService {
 				return response.json().data;
 			})
 			.do(result => {
+			});
+	}
+
+	getCsrfToken() {
+		return this._http.post(CONFIG.API_BASE + '/user/bc-token', {'socket_id': this.pusherSocketId}, this.httpHeader)
+			.map((response: Response) => {
+				return response.json().data;
+			})
+			.do(result => {
+				this.pusherAuthCode = result;
+				console.log(result);
 			});
 	}
 

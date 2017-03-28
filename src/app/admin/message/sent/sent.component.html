@@ -16,9 +16,9 @@
         <div class="box-body no-padding">
             <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+                <button (click)="selectAll()" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                    <button (click)="deleteSelected()" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
                 </div>
@@ -41,7 +41,7 @@
                         <tr *ngFor="let msg of _msgService.sentMessages">
                             <td>
                                 <div>
-                                    <input type="checkbox" class="css-checkbox lrg">
+                                    <input type="checkbox" class="css-checkbox lrg" [checked]="isChecked(msg.id)" (change)="updateChecked(msg.id, $event)">
                                     <label class="css-label lrg vlad"></label>
                                 </div>
                             </td>
@@ -67,9 +67,9 @@
         <div class="box-footer no-padding">
             <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+                <button (click)="selectAll()" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                    <button (click)="deleteSelected()" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
                 </div>

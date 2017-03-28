@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SelectModule } from 'ng2-select';
 
 import { MessageRoutingModule } from './message.routing';
@@ -18,7 +17,6 @@ import { TinyEditorComponent } from '../../tiny-editor/tiny-editor.component';
 	imports: [
 		CommonModule,
 		FormsModule,
-		MultiselectDropdownModule,
 		SelectModule,
 		MessageRoutingModule
 	],

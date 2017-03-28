@@ -48,7 +48,14 @@ export class AuthService {
 					return this._gs.getNumNewMessage().flatMap (
 						response => {
 							this._gs.numNewMessage = response;
+							
 							return this.getAuthUser();
+
+							// return this._gs.getCsrfToken().flatMap(
+							// 	response => {
+							// 		return this.getAuthUser();
+							// 	}
+							// )
 						}
 					);
 					
