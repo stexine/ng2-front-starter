@@ -14,7 +14,7 @@ export class UserService {
 
 	getFriends() {
 		var result;
-		return this._http.get(CONFIG.API_BASE + '/user/friends', this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/user/friends', this._gs.data.httpHeader)
 			.map((response: Response) => {
 				let data = response.text() ? response.json().data : [{}];
 				if (data) {

@@ -1,7 +1,7 @@
 <header class="main-header">
 
 	<!-- Logo -->
-	<a href="index2.html" class="logo">
+	<a routerLink="/" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
 		<span class="logo-mini"><b>A</b>LT</span>
 		<!-- logo for regular state and mobile devices -->
@@ -34,7 +34,7 @@
 									<a href="#">
 										<div class="pull-left">
 											<!-- User Image -->
-											<img [src]="_gs.authUser.avatar_img_url" class="img-circle" alt="User Image">
+											<img [src]="_gs.data.authUser.avatar_img_url" class="img-circle" alt="User Image">
 										</div>
 										<!-- Message title and timestamp -->
 										<h4>
@@ -120,17 +120,17 @@
 					<!-- Menu Toggle Button -->
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<!-- The user image in the navbar-->
-						<img [src]="_gs.authUser.avatar_img_url" class="user-image" alt="User Image">
+						<img [src]="_gs.data.authUser.avatar_img_url" class="user-image" alt="User Image">
 						<!-- hidden-xs hides the username on small devices so only the image appears. -->
-						<span class="hidden-xs">{{_gs.authUser.name}}</span>
+						<span class="hidden-xs">{{_gs.data.authUser.name}}</span>
 					</a>
 					<ul class="dropdown-menu">
 						<!-- The user image in the menu -->
 						<li class="user-header">
-							<img [src]="_gs.authUser.avatar_img_url" class="img-circle" alt="User Image">
+							<img [src]="_gs.data.authUser.avatar_img_url" class="img-circle" alt="User Image">
 
 							<p>
-								{{_gs.authUser.name}} - Web Developer
+								{{_gs.data.authUser.name}} - Web Developer
 								<small>Member since Nov. 2012</small>
 							</p>
 						</li>

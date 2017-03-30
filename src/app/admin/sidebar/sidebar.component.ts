@@ -12,10 +12,10 @@ import { AppGlobalService } from '../../app-global.service';
 })
 export class SidebarComponent implements OnInit {
 
-	constructor(private _adminService: AdminService, private _auth: AuthService, private _gs: AppGlobalService) { }
+	constructor(private _adminService: AdminService, private _auth: AuthService, private _gs: AppGlobalService) {
+	}
 
 	ngOnInit() {
-
 	}
 
 }

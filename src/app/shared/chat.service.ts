@@ -13,23 +13,24 @@ export class ChatService {
 
 	chatUser: User;
 	chatroomId: number;
-	chats: any[];
+	chatrooms: any[];
 
 	constructor(private _http: Http, private _gs: AppGlobalService, private _userService: UserService) { 
-		this.chats = [];
+		this.chatrooms = [];
 	}
 
 	getChats() {
-		return this._http.get(CONFIG.API_BASE + '/chat/chatrooms', this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/chat/chatrooms', this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
 			.do(result => {
+				this.chatrooms = result;
 			});
 	}
 
 	getChatsByChatroomId(chatroomId) {
-		return this._http.get(CONFIG.API_BASE + '/chat/chatroom/' + chatroomId, this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/chat/chatroom/' + chatroomId, this._gs.data.httpHeader)
 			.map((response: Response) => { 
 				return response.json();
 			})
@@ -39,7 +40,7 @@ export class ChatService {
 
 	getPrivateChats(userId) {
 
-		return this._http.get(CONFIG.API_BASE + '/chat/private/' + userId, this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/chat/private/' + userId, this._gs.data.httpHeader)
 			.map((response: Response) => { 
 				return response.json();
 			})
@@ -51,7 +52,7 @@ export class ChatService {
 
 	sendChat(chatroomId, chatMessage) {
 		let data = {'chatroom_id': chatroomId, 'chat_message': chatMessage};
-		return this._http.post(CONFIG.API_BASE + '/chat/post-chat', data, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/chat/post-chat', data, this._gs.data.httpHeader)
 			.map((response: Response) => { 
 				return response.json().data;
 			})

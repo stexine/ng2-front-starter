@@ -11,6 +11,7 @@ import { ChatService } from '../../shared/chat.service';
 	styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+	userId: string;
 	show: string;
 	friends: User[];
 	chatlist: any[];
@@ -20,6 +21,7 @@ export class ChatComponent implements OnInit {
 	chatMessage: string;
 
 	constructor(private _gs: AppGlobalService, private _userService: UserService, private _chatService: ChatService) {
+		this.userId = localStorage.getItem('userid');
 		this.show = 'chats';
 		this.chatMessage = '';
 	}

@@ -12,17 +12,15 @@ import { AuthService } from '../../auth.service';
 })
 export class TopbarComponent implements OnInit {
 
-	username: any;
-	userAvatar: string;
-
-	constructor(private _gs: AppGlobalService, private _auth: AuthService, private _router: Router) { }
+	constructor(private _gs: AppGlobalService, private _auth: AuthService, private _router: Router) {
+	}
 
 	ngOnInit() {
 	}
 
 	logout() {
 		this._auth.logout();
-		this._router.navigate(['/login']);
+		this._router.navigate(['/']);
 	}
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/Rx';
 
 import { CONFIG } from './config';
@@ -11,41 +12,56 @@ import { User } from './shared/User';
 @Injectable()
 export class AppGlobalService {
 
-	isAuth: boolean;
-	authUser: User;
-	numNewChat: number;
-	numNewMessage: number;
-	pusherSocketId: string;
-	pusherAuthCode: string;
+	private subject = new Subject<any>();
 
-	httpHeader: any;
+	data: GlobalData;
 
-	progressBar: SlimLoadingBarService;
+	//progressBar: SlimLoadingBarService;
 
 	constructor(private _pbar: SlimLoadingBarService, private _http: Http) {
 
+		this.data = new GlobalData;
+
 		if (localStorage.getItem('token') != null) {
-			this.isAuth = true;
+			this.data.isAuth = true;
 		} else {
-			this.isAuth = false;
+			this.data.isAuth = false;
 		}
 
-		this.authUser = new User;
+		//this.data.authUser = new User;
+		//this.progressBar = new SlimLoadingBarService;
 
-		this.httpHeader = { headers: new Headers({ 'X-Requested-With': 'XMLHttpRequest', 'Authorization': 'Bearer ' +  localStorage.getItem('token')}) };
+		this.data.httpHeader = { headers: new Headers({ 'X-Requested-With': 'XMLHttpRequest', 'Authorization': 'Bearer ' +  localStorage.getItem('token')}) };
 
-		this.numNewMessage = 0;
-		this.numNewChat = 0;
+		this.data.numNewMessage = 0;
+		this.data.numNewChat = 0;
 	}
 
-	clearAuth() {
-		this.isAuth = false;
-		this.authUser = new User;
-		this.httpHeader = undefined;
+	sendMessage(message) {
+		this.subject.next({ text: message});
+	}
+
+	clearMessage() {
+        this.subject.next();
+    }
+ 
+    getMessage(): Observable<any> {
+        return this.subject.asObservable();
+    }
+
+
+	clearData() {
+		this.data = new GlobalData;
 	}
 
 	pbarStart() {
 		this._pbar.start();
+	}
+
+	pbarFail() {
+		this._pbar.color = 'red';
+		this._pbar.reset();
+		this._pbar.color = '#96ff59';
 	}
 
 	pbarProgress(progress: number) {
@@ -58,25 +74,32 @@ export class AppGlobalService {
 
 	getNumNewMessage() {
 
-		return this._http.get(CONFIG.API_BASE + '/message/get-num-new-message', this.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/message/get-num-new-message', this.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
 			.do(result => {
 			});
+	}	
+
+}
+
+class GlobalData {
+	isAuth: boolean;
+	authUser: User;
+	numNewChat: number;
+	numNewMessage: number;
+	pusherSocketId: string;
+	pusherAuthCode: string;
+	httpHeader: any;
+
+	constructor() {
+		this.isAuth = false;
+		this.authUser = new User;
+		this.numNewChat = 0;
+		this.numNewMessage = 0;
+		this.pusherSocketId = '';
+		this.pusherAuthCode = '';
+		this.httpHeader = {};
 	}
-
-	getCsrfToken() {
-		return this._http.post(CONFIG.API_BASE + '/user/bc-token', {'socket_id': this.pusherSocketId}, this.httpHeader)
-			.map((response: Response) => {
-				return response.json().data;
-			})
-			.do(result => {
-				this.pusherAuthCode = result;
-				console.log(result);
-			});
-	}
-
-	
-
 }

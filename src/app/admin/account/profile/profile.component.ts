@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
 
 		this._profileService.getUserProfile().subscribe(
 			response => {
-				this.userInfo = Object.assign({}, this._gs.authUser);
+				this.userInfo = Object.assign({}, this._gs.data.authUser);
 				this.profile = response;
 				this.userInfo.profile = this.profile;
 
@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
 		this._profileService.uploadAvatarImage(this.data.image).subscribe(
 			response => {
 				
-				this._gs.authUser.avatar_img_url = response;
+				this._gs.data.authUser.avatar_img_url = response;
 				this._gs.pbarProgress(90);
 				this._gs.pbarFinish();
 				swal(
@@ -144,7 +144,7 @@ export class ProfileComponent implements OnInit {
 
 				this.userInfo.password = '';
 				this.userInfo.password2 = '';
-				this._gs.authUser = Object.assign({}, this.userInfo);
+				this._gs.data.authUser = Object.assign({}, this.userInfo);
 
 				this._gs.pbarFinish();
 

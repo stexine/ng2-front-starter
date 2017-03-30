@@ -15,12 +15,14 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './public/welcome/welcome.component';
 import { TestComponent } from './test/test.component';
 import { NotFound404Component } from './not-found-404/not-found-404.component';
+import { NotificationListenerComponent } from './notification-listener/notification-listener.component';
+import { AuthComponent } from './auth/auth.component';
 
 import AppGlobalErrorHandler from './app-global-error-handler';
 import { PersonService } from './test/person.service';
 import { AppGlobalService } from './app-global.service';
 import { ChatService } from './shared/chat.service';
-import { NotificationListenerComponent } from './notification-listener/notification-listener.component';
+import { NotificationService } from './shared/notification.service';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { NotificationListenerComponent } from './notification-listener/notificat
 		WelcomeComponent,
 		TestComponent,
 		NotFound404Component,
-		NotificationListenerComponent
+		NotificationListenerComponent,
+		AuthComponent
 	],
 	imports: [
 		BrowserModule,
@@ -41,6 +44,6 @@ import { NotificationListenerComponent } from './notification-listener/notificat
 		AppRoutingModule,
 	],
 	bootstrap: [AppComponent],
-	providers: [AppGlobalService, PersonService, ChatService, {provide: ErrorHandler, useClass: AppGlobalErrorHandler}]
+	providers: [AppGlobalService, PersonService, ChatService, NotificationService, {provide: ErrorHandler, useClass: AppGlobalErrorHandler}]
 })
 export class AppModule { }

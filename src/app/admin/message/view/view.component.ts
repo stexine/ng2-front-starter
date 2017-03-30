@@ -22,8 +22,6 @@ export class ViewComponent implements OnInit {
 		};
 	}
 
-
-
 	ngOnInit() {
 
 		this._gs.pbarProgress(50);

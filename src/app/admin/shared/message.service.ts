@@ -56,7 +56,7 @@ export class MessageService {
 
 	getMessageById(id) {
 
-		return this._http.post(CONFIG.API_BASE + '/message/get-message-byid', { 'id': id }, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/message/get-message-byid', { 'id': id }, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			}).do(result => {
@@ -65,7 +65,7 @@ export class MessageService {
 				});
 				if (index >= 0) {
 					if (this.recvMessages[index].read == false) {
-						this._gs.numNewMessage = this._gs.numNewMessage - 1;
+						this._gs.data.numNewMessage = this._gs.data.numNewMessage - 1;
 						this.recvMessages[index].read = true;
 					}
 				}
@@ -79,7 +79,7 @@ export class MessageService {
 			return Observable.of(this.numNewMessage);
 		}
 
-		return this._http.get(CONFIG.API_BASE + '/message/get-num-new-message', this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/message/get-num-new-message', this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -93,7 +93,7 @@ export class MessageService {
 		 	return Observable.of(this.recvMessages);
 		}
 
-		return this._http.get(CONFIG.API_BASE + '/message', this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/message', this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -108,7 +108,7 @@ export class MessageService {
 			return Observable.of(this.sentMessages);
 		}
 
-		return this._http.post(CONFIG.API_BASE + '/message/get-messages-sent', {}, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/message/get-messages-sent', {}, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -118,7 +118,7 @@ export class MessageService {
 	}
 
 	sendMessage(message) {
-		return this._http.post(CONFIG.API_BASE + '/message/send-message', message, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/message/send-message', message, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -131,7 +131,7 @@ export class MessageService {
 
 	deleteMessages(messageIds: number[], folder: string) {
 
-		return this._http.post(CONFIG.API_BASE + '/message/del-messages', { 'ids': messageIds }, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/message/del-messages', { 'ids': messageIds }, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json();
 			})
@@ -163,7 +163,7 @@ export class MessageService {
 		});
 
 		if (folder == 'inbox') {
-			this._gs.numNewMessage = this._gs.numNewMessage - numNewMsg;
+			this._gs.data.numNewMessage = this._gs.data.numNewMessage - numNewMsg;
 		}
 	}
 

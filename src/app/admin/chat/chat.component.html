@@ -57,10 +57,10 @@
 						<div class="direct-chat-messages">
 
 							<!-- Message to the right -->
-							<div *ngFor="let chat of chats" [ngClass]="chat.sender_id == _gs.authUser.id ? 'direct-chat-msg' : 'direct-chat-msg right'">
+							<div *ngFor="let chat of chats" [ngClass]="chat.sender_id == userId ? 'direct-chat-msg' : 'direct-chat-msg right'">
 								<div class="direct-chat-info clearfix">
-									<span [ngClass]="chat.sender_id == _gs.authUser.id ? 'direct-chat-name pull-left' : 'direct-chat-name pull-right'">{{chat.sender.name}}</span>
-									<span [ngClass]="chat.sender_id == _gs.authUser.id ? 'direct-chat-timestamp pull-right' : 'direct-chat-timestamp pull-left'">{{chat.created_at}}</span>
+									<span [ngClass]="chat.sender_id == userId ? 'direct-chat-name pull-left' : 'direct-chat-name pull-right'">{{chat.sender.name}}</span>
+									<span [ngClass]="chat.sender_id == userId ? 'direct-chat-timestamp pull-right' : 'direct-chat-timestamp pull-left'">{{chat.created_at}}</span>
 								</div>
 								<!-- /.direct-chat-info -->
 								<img class="direct-chat-img" [src]="chat.sender.avatar" alt="message user image">

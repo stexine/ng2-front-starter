@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
 			return true;
 		} else {
 			this._auth.logout();
-			this._router.navigate(['/login']);
+			this._router.navigate(['/login'], {queryParams: { returnUrl: state.url}});
 			return false;
 		}
 
@@ -47,14 +47,6 @@ export class AuthGuard implements CanActivate {
 
 	private isAuth() {
 		if (localStorage.getItem('token') != null && parseInt(localStorage.getItem('expiration')) >= Date.now()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private isAuth2() {
-		if ( this._gs.isAuth ) {
 			return true;
 		} else {
 			return false;

@@ -20,11 +20,7 @@ export class MessageComponent implements OnInit {
 	}
 
 	getsth() {
-		this._gs.getCsrfToken().subscribe(
-			response => {
-				
-			}
-		)
+		
 	}
 
 }

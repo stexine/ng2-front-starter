@@ -149,7 +149,7 @@
 					<div class="box-body text-center">
 
 						<div *ngIf="!showUpload">
-							<img [src]="_gs.authUser.avatar_img_url" alt="User" class="img-thumbnail img-circle">
+							<img [src]="_gs.data.authUser.avatar_img_url" alt="User" class="img-thumbnail img-circle">
 							<div class="box-footer">
 								<button class="btn btn-primary btn-sm" (click)="toggleUpload()">
 											<i class="fa fa-camera"></i> Upload image

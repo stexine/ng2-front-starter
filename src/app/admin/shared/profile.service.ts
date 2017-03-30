@@ -22,7 +22,7 @@ export class ProfileService {
 			return Observable.of(this.profile);
 		}
 
-		return this._http.get(CONFIG.API_BASE + '/user/profile', this._gs.httpHeader)
+		return this._http.get(CONFIG.API_BASE + '/user/profile', this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -33,7 +33,7 @@ export class ProfileService {
 
 	updateUserProfile(user: User) {
 		let postData = { 'user': user };
-		return this._http.put(CONFIG.API_BASE + '/user/update', postData, this._gs.httpHeader)
+		return this._http.put(CONFIG.API_BASE + '/user/update', postData, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
@@ -46,7 +46,7 @@ export class ProfileService {
 	uploadAvatarImage(image:any) {
 		let postData = {img: image};
 
-		return this._http.post(CONFIG.API_BASE + '/user/image-upload', postData, this._gs.httpHeader)
+		return this._http.post(CONFIG.API_BASE + '/user/image-upload', postData, this._gs.data.httpHeader)
 			.map((response: Response) => {
 				return response.json().data;
 			})
