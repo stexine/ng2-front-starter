@@ -1,0 +1,70 @@
+<!-- /.box-header -->
+<div class="box-body no-padding">
+	<div class="mailbox-controls">
+		<!-- Check all button -->
+		<button (click)="selectAll()" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+		<div class="btn-group">
+			<button (click)="deleteSelected()" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+			<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+			<button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+		</div>
+		<!-- /.btn-group -->
+		<button type="button" class="btn btn-default btn-sm" (click)="refresh()"><i class="fa fa-refresh"></i></button>
+		<div class="pull-right">
+			showing: {{pageData.from}}-{{pageData.to}}/{{pageData.total}}
+		</div>
+		<!-- /.pull-right -->
+	</div>
+	<div class="table-responsive mailbox-messages">
+		<table class="table table-hover table-striped">
+			<tbody>
+
+				<tr *ngFor="let msg of pageData.data  | paginate: { id: 'server', itemsPerPage: pageData.per_page, currentPage: pageData.current_page, totalItems: pageData.total }"
+				 [class.active]="folder == 'inbox' && !msg.read">
+					<td>
+						<div>
+							<input type="checkbox" class="css-checkbox lrg" [checked]="isChecked(msg.id)" (change)="updateChecked(msg.id, $event)">
+							<label class="css-label lrg vlad"></label>
+						</div>
+					</td>
+					<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
+					<td class="col-sm-3" *ngIf="folder == 'inbox'">{{msg.sender.name}}</td>
+					<td class="col-sm-3" *ngIf="folder == 'sent'">{{msg.receiver.name}}</td>
+					<td class="col-sm-7">
+						<span *ngIf="folder == 'inbox' && !msg.read">New</span>
+						<a [routerLink]="['/admin/message/view', msg.id]">
+                                    {{msg.subject}}
+                                </a>
+					</td>
+					<td class="mailbox-attachment"></td>
+					<td class="col-sm-2">{{msg.created_at}}</td>
+					<td class="col-sm-1">
+						<button class="btn btn-danger" (click)="deleteMessages([msg.id])">Delete</button>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+		<!-- /.table -->
+	</div>
+	<!-- /.mail-box-messages -->
+</div>
+<!-- /.box-body -->
+<div class="box-footer no-padding">
+	<div class="mailbox-controls">
+		<!-- Check all button -->
+		<button (click)="selectAll()" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+		<div class="btn-group">
+			<button (click)="deleteSelected()" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+			<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+			<button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+		</div>
+		<!-- /.btn-group -->
+		<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+		<div class="pull-right">
+			<pagination-controls (pageChange)="doChangePage($event)" id="server"></pagination-controls>
+			<!-- /.btn-group -->
+		</div>
+		<!-- /.pull-right -->
+	</div>
+</div>

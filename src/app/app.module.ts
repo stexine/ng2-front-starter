@@ -10,7 +10,6 @@ import { PublicModule } from './public/public.module';
 
 import { AppRoutingModule } from './app.routing';
 
-
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './public/welcome/welcome.component';
 import { TestComponent } from './test/test.component';
@@ -39,6 +38,7 @@ import { NotificationService } from './shared/notification.service';
 		FormsModule,
 		HttpModule,
 		SlimLoadingBarModule,
+
 		AdminModule,
 		PublicModule,
 		AppRoutingModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import swal, { SweetAlertOptions } from 'sweetalert2';
 
 import { AppGlobalService } from '../../../app-global.service';
 import { Message, MessageService } from '../../shared/message.service';
@@ -12,107 +11,49 @@ import { Message, MessageService } from '../../shared/message.service';
 export class InboxComponent implements OnInit, OnDestroy {
 
 	private _sub: any;
-	checkedMessages: number[];
-	selectedAll: boolean;
 
-	constructor(private _msgService: MessageService, private _gs: AppGlobalService) {
-		this.checkedMessages = [];
-		this.selectedAll = false;
+	pageSize: number;
+	pageData: any;
+	folder: string;
+
+	constructor(private _msg: MessageService, private _gs: AppGlobalService) {
+		
+		this.pageSize = 3;
+		this.folder = 'inbox';
+		
+		this.pageData = {};
+		this.pageData.current_page = _msg.serviceData.recvCurrPage.currPage;		
+		
 	}
 
 	ngOnInit() {
 
-		this._gs.pbarProgress(50);
+		this._gs.pbarProgress(30);
 
-		this._sub = this._msgService.getRecvMessages().subscribe(
-			(response) => {
-				this._gs.pbarProgress(90);
-				this._msgService.recvMessages = response
-				this._gs.pbarFinish();
-
-			},
-			(error) => console.log(error)
-		);
+		this.getPage(this.pageData.current_page);
+		
 	}
 
 	ngOnDestroy() {
 		this._sub.unsubscribe();
 	}
 
-	isChecked(id: number) {
-		if ( this.checkedMessages.indexOf(id) >= 0 ) {
-			return true;
-		} else {
-			return false;
-		}
-	
-	}
+	getPage(page) {
 
-	updateChecked(id: number, event) {
-		var index = this.checkedMessages.indexOf(id);
+		this._gs.pbarProgress(40);
 
-		if (index >= 0) {
-			this.checkedMessages.splice(index, 1);
-		} else {
-			this.checkedMessages.push(id);
-		}
-	}
+		this._sub = this._msg.getRecvMessages(page, this.pageSize).subscribe(
+			(response) => {
+				this._gs.pbarProgress(90);
+				this._msg.serviceData.recvMessages[page] = response;
 
-	selectAll() {
-		this.checkedMessages = [];
-		if (this.selectedAll) {
-			this.selectedAll = false;
-		} else {
-			this.selectedAll = true;
-			var m;
-			for (m in this._msgService.recvMessages) {
-				this.checkedMessages.push(this._msgService.recvMessages[m].id);
-			}
-		}
-	}
+				this.pageData = this._msg.serviceData.recvMessages[page];
+				
+				this._gs.pbarFinish();
 
-	deleteSelected() {
-		this.deleteMessages(this.checkedMessages);
-	}	
-
-	deleteMessages(msgIds: number[]) {
-		
-		this._gs.pbarProgress(50);
-
-		var mService = this._msgService;
-		var ids = msgIds;
-
-		swal({
-			title: 'Are you sure to delete?',
-			text: "You won't be able to revert this!",
-			type: 'warning',
-			showCancelButton: true,
-			showLoaderOnConfirm: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!',
-			preConfirm: function (store) {
-				return new Promise(function (resolve, reject) {
-					mService.deleteMessages(ids, 'inbox').subscribe(
-						(response) => {
-							resolve(response);
-						},
-						(error) => console.log(error)
-					);
-				});
-			}
-		}).then(function () {
-			this._gs.pbarProgress(90);
-			this.checkedMessages = [];
-			this.selectedAll = false;
-			swal(
-				'Deleted!',
-				'Your file has been deleted.',
-				'success'
-			);
-			this._gs.pbarFinish();
-		}.bind(this))
-
+			},
+			(error) => console.log(error)
+		);
 	}
 
 }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin.routing';
 import { AuthGuard } from '../auth.guard';
@@ -24,7 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         SettingbarComponent,
         DashboardComponent
     ],
-    imports: [ AdminRoutingModule ],
+    imports: [ AdminRoutingModule, CommonModule],
     providers: [ AuthGuard, AdminService, MessageService, ProfileService, UserService ]
 })
 

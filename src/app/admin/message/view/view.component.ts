@@ -13,13 +13,10 @@ import { Message, MessageService } from '../../shared/message.service';
 
 export class ViewComponent implements OnInit {
 
-	msg: any;
+	msg: Message;
 
-	constructor(private _msgService: MessageService, private _gs: AppGlobalService, private _route: ActivatedRoute, private _router: Router) { 
-		this.msg = {
-			sender: {},
-			receiver: {}
-		};
+	constructor(private _msg: MessageService, private _gs: AppGlobalService, private _route: ActivatedRoute, private _router: Router) { 
+		this.msg = new Message;
 	}
 
 	ngOnInit() {
@@ -27,7 +24,7 @@ export class ViewComponent implements OnInit {
 		this._gs.pbarProgress(50);
 		
 		this._route.params.switchMap((params: Params) => 
-			this._msgService.getMessageById(+params['id']))
+			this._msg.getMessageById(+params['id']))
 				.subscribe( 
 					(message) => {
 						this._gs.pbarProgress(90);

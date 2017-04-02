@@ -24,7 +24,7 @@ export class NotificationListenerComponent implements OnInit, OnDestroy {
 
 	private _pusher: any;
 
-	constructor(private _gs: AppGlobalService, private _msgService: MessageService, private _chatSerivce: ChatService, private _noticeService: NotificationService) {
+	constructor(private _gs: AppGlobalService, private _msg: MessageService, private _chatSerivce: ChatService, private _noticeService: NotificationService) {
 		this._sub = this._gs.getMessage().subscribe(
 			message => { 
 				console.log(message);
@@ -46,12 +46,14 @@ export class NotificationListenerComponent implements OnInit, OnDestroy {
 
 	initSocket() {
 		// socket listener for message
-		this._socketConn = this._msgService.getMessageFromSocket().subscribe(
+		this._socketConn = this._msg.getMessageFromSocket().subscribe(
 			message => {
 				let msg = JSON.parse(message.toString());
 				if (msg.receiver.id == this._gs.data.authUser.id) {
-					if (this._msgService.recvMessages != undefined) {
-						this._msgService.recvMessages.unshift(msg);
+					if (this._msg.serviceData.recvMessages[1].data != undefined && this._msg.serviceData.recvCurrPage.currPage == 1) {
+						this._msg.serviceData.recvMessages[1].to = this._msg.serviceData.recvMessages[1].to + 1;
+						this._msg.serviceData.recvMessages[1].total = this._msg.serviceData.recvMessages[1].total + 1;
+						this._msg.serviceData.recvMessages[1].data.unshift(msg);
 					}
 					this._gs.data.numNewMessage = this._gs.data.numNewMessage + 1;
 				}

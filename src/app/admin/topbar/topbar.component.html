@@ -59,17 +59,20 @@
 					<!-- Menu toggle button -->
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-bell-o"></i>
-						<span class="label label-warning">10</span>
+						<span class="label label-warning" *ngIf="_notice.notifications.length > 0">{{ _notice.notifications.length }}</span>
 					</a>
-					<ul class="dropdown-menu">
-						<li class="header">You have 10 notifications</li>
-						<li>
+					<ul class="dropdown-menu" *ngIf="_notice.notifications.length == 0">
+						<li class="header">You have 0 notifications</li>
+					</ul>
+					<ul class="dropdown-menu" *ngIf="_notice.notifications.length > 0">
+						<li class="header">You have {{ _notice.notifications.length }} notifications</li>
+						<li *ngFor="let notice of _notice.notifications">
 							<!-- Inner Menu: contains the notifications -->
 							<ul class="menu">
 								<li>
 									<!-- start notification -->
-									<a href="#">
-										<i class="fa fa-users text-aqua"></i> 5 new members joined today
+									<a routerLink="/admin/chat">
+										<i class="fa fa-users text-aqua"></i> {{notice.name}}
 									</a>
 								</li>
 								<!-- end notification -->
@@ -78,6 +81,8 @@
 						<li class="footer"><a href="#">View all</a></li>
 					</ul>
 				</li>
+
+
 				<!-- Tasks Menu -->
 				<li class="dropdown tasks-menu">
 					<!-- Menu Toggle Button -->
